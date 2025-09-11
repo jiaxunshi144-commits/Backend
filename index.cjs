@@ -24,7 +24,7 @@ const contractABI = [
 const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
 // Upload & Register endpoint
-app.post("/uploadAndRegister", upload.single("file"), async (req, res) => {
+app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     // 1. Read file and generate hash
     const fileBuffer = fs.readFileSync(req.file.path);
