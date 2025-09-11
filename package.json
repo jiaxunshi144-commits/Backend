@@ -1,9 +1,10 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Blockchain hash storage backend",
+  "main": "index.cjs",
   "scripts": {
+    "start": "node index.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,15 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "express": "^5.1.0",
     "multer": "^2.0.2",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "ethers": "^6.15.0"
   },
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
-    "ethers": "^6.15.0",
     "hardhat": "^2.26.0"
   }
 }
