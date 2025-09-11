@@ -1,0 +1,156 @@
+---
+title: "DSA212 Lecture 3"
+author: "[Daniel Preve](https://bit.ly/3TkUkSL)"
+date: "2024-09-02"
+format: html
+editor: visual
+---
+
+## Examples
+
+This section includes the code examples provided in the notes for Lecture 3.
+
+### Example 1
+
+Load the `ggplot2` package for R and explores its `presidential` data frame:
+
+```{r}
+library(ggplot2)  # Load the ggplot2 package
+
+presidential  # Explore the presidential data frame
+```
+
+### Example 2
+
+Return a subset of the columns of the `presidential` data frame:
+
+```{r}
+#install.packages("dplyr")  # Install the dplyr package  
+library(dplyr)  # Load the dplyr package
+
+select(presidential, name, party)  # Return a subset of the columns
+```
+
+### Example 3
+
+Return a subset of the rows of the `presidential` data frame:
+
+```{r}
+filter(presidential, party == "Republican")  # Return a subset of the rows
+```
+
+### Example 4
+
+The `filter()` and `select()` functions can also be combined:
+
+```{r}
+#install.packages("lubridate")  # Install the lubridate package  
+library(lubridate)  # Load the lubridate package
+
+select(filter(presidential, year(start) > 1973 & party == "Democratic"), name)
+```
+
+### Example 5
+
+Using pipes we can rewrite our code in a more readable syntax:
+
+```{r}
+# A data manipulation pipeline
+presidential |> 
+  filter(year(start) > 1973 & party == "Democratic") |>
+  select(name)
+```
+
+### Example 6
+
+Create a new object named `mypresidents`:
+
+```{r}
+# Create a new data frame
+mypresidents <- presidential |>
+  mutate(term.length = interval(start, end) / dyears(1))
+
+mypresidents  # Explore the mypresidents data frame
+```
+
+### Example 7
+
+Add a new column to the data frame:
+
+```{r}
+# Add a new column to the data frame
+mypresidents <- mutate(mypresidents, elected = year(start) - 1)
+
+mypresidents  # Explore the new data frame
+```
+
+### Example 8
+
+Change the name of the `term.length` variable using the `rename()` function:
+
+```{r}
+# Change the name of the term.length variable
+mypresidents <- mypresidents |> rename(term_length = term.length)
+
+mypresidents  # Explore the changes
+```
+
+### Example 9
+
+Return a sorted (ordered) data frame:
+
+```{r}
+# Return a sorted data frame using the desc function
+mypresidents |> arrange(desc(term_length))
+```
+
+### Example 10
+
+Compute a data frame of summaries:
+
+```{r}
+# Compute a data frame of summaries
+summarize(mypresidents, n = n(), years = sum(term_length))
+```
+
+### Example 11
+
+`summarize()` with `group_by()` enables us to make comparisons:
+
+```{r}
+mypresidents |> 
+  group_by(party) |>
+  summarize(n = n(), first_year = min(year(start)), last_year = max(year(end)), 
+            num_democrats = sum(party == "Democratic"), years = sum(term_length), 
+            avg_term_length = mean(term_length))
+```
+
+### Example 12
+
+Explore the `flights` table (data frame) of the `nycflights13` package:
+
+```{r}
+#install.packages("nycflights13")
+library(nycflights13)
+
+head(flights, 3)
+```
+
+### Example 13
+
+Explore the `airlines` table (data frame) of the `nycflights13` package:
+
+```{r}
+head(airlines, 3)
+```
+
+### Example 14
+
+Create and explore the new data frame `flightsJoined`, with flights and the full names of the airlines that managed each flight:
+
+```{r}
+flightsJoined <- flights |> 
+  inner_join(airlines, by = "carrier")
+
+glimpse(flightsJoined)
+```
