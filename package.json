@@ -4,9 +4,8 @@
   "description": "Blockchain ESG backend with static frontend serving",
   "main": "backend/server.cjs",
   "scripts": {
-    "start": "node backend/server.cjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "start": "node server.cjs"
+  }
   "keywords": [],
   "author": "",
   "license": "ISC",
